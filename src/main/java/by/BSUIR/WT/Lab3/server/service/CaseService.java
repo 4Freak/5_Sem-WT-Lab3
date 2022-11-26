@@ -2,9 +2,8 @@ package by.BSUIR.WT.Lab3.server.service;
 
 import java.util.List;
 
-import javax.lang.model.element.Element;
-import javax.swing.text.Document;
-
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import by.BSUIR.WT.Lab3.server.model.StudentCase;

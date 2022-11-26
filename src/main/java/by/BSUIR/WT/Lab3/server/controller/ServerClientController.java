@@ -3,6 +3,9 @@ package by.BSUIR.WT.Lab3.server.controller;
 import java.io.*;
 import java.net.Socket;
 
+import by.BSUIR.WT.Lab3.server.command.CommandProvider;
+import by.BSUIR.WT.Lab3.server.command.exception.CommandExcpetion;
+
 public class ServerClientController extends Thread{
 
 	private final Socket socket;
@@ -19,7 +22,7 @@ public class ServerClientController extends Thread{
 	@Override
 	public void run() {
 		try {
-			var inputStreamReader = new InputStreamReader(socket.getInputStream())
+			var inputStreamReader = new InputStreamReader(socket.getInputStream());
 			bufferedReader = new BufferedReader(inputStreamReader);
 			var outputStreamWriter = new OutputStreamWriter(socket.getOutputStream());
 			printWriter = new PrintWriter(outputStreamWriter);
@@ -27,17 +30,20 @@ public class ServerClientController extends Thread{
 			e.printStackTrace();
 			sendMessage(e.getMessage());
 		}
-		sendMessage("Available commands: DISCONNECT, \nVIEW, \nCREATE (firstName) (lastName), \nEDIT (id) (firstName) (lastName)");
+		sendMessage("Available commands: \nAUTH USER/MANAGER DISCONNECT, \nVIEW, \nCREATE (firstName) (lastName), \nEDIT (id) (firstName) (lastName)");
 		var running = true;
 		while(running) {
 			try {
 				var request = readMessage();
 				if (request == null) {
 					running = false;
-				}catch (IOException e) {
-					
 				}
-				// Commands handlers
+				
+				var command = CommandProvider.getInstance().getCommand(request);
+				var response = command.execute(this, request);
+				sendMessage(response);
+			}catch (CommandExcpetion e) {
+				e.printStackTrace();
 			}
 		}
 	}
