@@ -41,10 +41,10 @@ public class StudentCaseDAOImpl implements StudentCaseDAO {
 	private StudentCaseDAOImpl() {
 		readWriteLock = new ReentrantReadWriteLock();
 		studentCases = new HashMap<Integer, StudentCase>();
-		LoadData();
+		loadData();
 	}
 	
-	private void LoadData() {
+	private void loadData() {
 		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 		try {
 			DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();

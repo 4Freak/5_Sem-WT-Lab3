@@ -25,7 +25,6 @@ public class CaseServiceImpl implements CaseService{
 			var currNode = nodes.item(i);
 			if (currNode.getNodeType() == Node.ELEMENT_NODE) {
 				String text = currNode.getTextContent();
-				System.out.println(currNode.getNodeName().toString());
 				switch(currNode.getNodeName()) {
 					case "id" 			-> id = Integer.parseInt(text);
 					case "firstName" 	-> firstName = text;
